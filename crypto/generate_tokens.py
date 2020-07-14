@@ -42,8 +42,8 @@ def write_demo_tokens(private_key, issuer):
         bobid.write(bob_identity.decode('utf-8'))
     with open('charlie_id.jwt', 'w') as aliceclaim:
         aliceclaim.write(charlie_identity.decode('utf-8'))
-    with open('alice_expired_id.jwt', 'w') as aliceclaim:
-        aliceclaim.write(alice_expired_identity.decode('utf-8'))
+    with open('alice_expired_id.jwt', 'w') as alicexp
+        aliceexp.write(alice_expired_identity.decode('utf-8'))
 
 
 if __name__ == "__main__":

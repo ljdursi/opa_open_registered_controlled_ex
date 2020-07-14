@@ -1,3 +1,5 @@
 pyjwt
 pycryptodome
 cryptography
+requests
+pytest

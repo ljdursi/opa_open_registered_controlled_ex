@@ -61,3 +61,7 @@ where the post body was:
 }
 ```
 
+You can then run the tests with:
+```
+pytest
+```
