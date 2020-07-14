@@ -18,6 +18,10 @@ For clarity here everything is in one static rego file, but it's possible to
 incorporate [external data](https://www.openpolicyagent.org/docs/latest/external-data/)
 into OPA documents in a nmber of ways.
 
+Valid JWT tokens are created for alice, bob, charlie (who has no controlled access
+authorizations), as well as an expired token for alice.  Then these are tested
+against expectations for the policy.
+
 ## Running
 
 First install the necessary python packages:
