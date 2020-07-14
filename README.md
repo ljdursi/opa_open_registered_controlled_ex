@@ -61,7 +61,8 @@ where the post body was:
 }
 ```
 
-You can then run the tests with:
+You can then run the tests (and see how the service is called using the 
+requests library in python) with:
 ```
 pytest
 ```
