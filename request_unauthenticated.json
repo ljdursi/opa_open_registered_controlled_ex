@@ -1,0 +1,6 @@
+{
+    "input":{
+        "method": "GET",
+        "path": ["beacon"]
+    }
+}

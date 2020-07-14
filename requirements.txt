@@ -1,0 +1,3 @@
+pyjwt
+pycryptodome
+cryptography

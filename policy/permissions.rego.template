@@ -1,0 +1,50 @@
+package permissions
+
+## define datasets
+
+open_datasets = ["open1", "open2", "open3"]
+registered_datasets = ["registered1"]
+
+controlled_access_list = {"alice":["controlled1"],
+                          "bob":  ["controlled2"]}
+
+## policy decision-making
+
+default id_token = {}
+default valid_id_token = false
+default allowed = []
+default registered_allowed = []
+default controlled_allowed = []
+default sub = ""
+default iss = ""
+
+id_token = io.jwt.decode(input.user)
+
+iss = id_token[1].iss
+sub = id_token[1].sub 
+
+# valid token  if valid (sig matches, key matches, not expired, right issuer)
+valid_id_token = true {
+  id_valid := io.jwt.verify_rs256(input.user, idp_public_key)
+  all([id_valid == true, iss == idp_issuer])
+} 
+
+# authorize items from a list
+allowed = array.concat(array.concat(open_datasets, registered_allowed), controlled_allowed) {
+  input.method = "GET"
+  input.path = ["beacon"]
+}
+
+registered_allowed = registered_datasets {
+  valid_id_token
+}
+
+controlled_allowed = controlled_access_list[sub]{
+  valid_id_token
+}
+
+## IdP configuration
+
+idp_issuer := "$idp"
+
+idp_public_key := `$public_key`
