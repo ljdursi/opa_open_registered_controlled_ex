@@ -17,6 +17,9 @@ default registered_allowed = []
 default controlled_allowed = []
 default sub = ""
 default iss = ""
+exp = id_token[1].exp
+iat = id_token[1].iat
+now := time.now_ns()/1000000000
 
 id_token = io.jwt.decode(input.user)
 
@@ -26,7 +29,7 @@ sub = id_token[1].sub
 # valid token  if valid (sig matches, key matches, not expired, right issuer)
 valid_id_token = true {
   id_valid := io.jwt.verify_rs256(input.user, idp_public_key)
-  all([id_valid == true, iss == idp_issuer])
+  all([id_valid == true, iss == idp_issuer, exp > now, iat < now])
 } 
 
 # authorize items from a list
