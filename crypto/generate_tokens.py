@@ -36,14 +36,14 @@ def write_demo_tokens(private_key, issuer):
     charlie_identity = create_token('charlie', private_key, issuer, now)
     alice_expired_identity = create_token('alice', private_key, issuer, longago)
 
-    with open('alice_id.jwt', 'w') as aliceid:
-        aliceid.write(alice_identity.decode('utf-8'))
-    with open('bob_id.jwt', 'w') as bobid:
-        bobid.write(bob_identity.decode('utf-8'))
-    with open('charlie_id.jwt', 'w') as aliceclaim:
-        aliceclaim.write(charlie_identity.decode('utf-8'))
-    with open('alice_expired_id.jwt', 'w') as aliceexp:
-        aliceexp.write(alice_expired_identity.decode('utf-8'))
+    with open('alice_id.jwt', 'w') as f:
+        f.write(alice_identity.decode('utf-8'))
+    with open('bob_id.jwt', 'w') as f:
+        f.write(bob_identity.decode('utf-8'))
+    with open('charlie_id.jwt', 'w') as f:
+        f.write(charlie_identity.decode('utf-8'))
+    with open('alice_expired_id.jwt', 'w') as f:
+        f.write(alice_expired_identity.decode('utf-8'))
 
 
 if __name__ == "__main__":

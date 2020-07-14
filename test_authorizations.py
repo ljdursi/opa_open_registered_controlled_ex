@@ -30,7 +30,7 @@ def make_opa_request_for_service(user_token, service="beacon"):
 
 
 def test_unauthenticated():
-   assert make_opa_request_for_service(None) == OPEN_DATASETS
+    assert make_opa_request_for_service(None) == OPEN_DATASETS
 
 def test_other_service():
     assert make_opa_request_for_service(None, service="WES") == []
