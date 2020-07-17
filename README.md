@@ -24,7 +24,8 @@ against expectations for the policy.
 
 ## Running
 
-First install the necessary python packages:
+First install the necessary python packages (just used to generate JWTs and
+keys):
 
 ```bash
 virtualenv -p python3 env
@@ -39,7 +40,7 @@ the static policy
 make
 ```
 
-Startup OPA using the new policy:
+Start up OPA using the new policy:
 
 ```bash
 docker-compose up -d
@@ -65,8 +66,40 @@ where the post body was:
 }
 ```
 
+and get back the result:
+
+```
+{"result":["open1","open2","open3"]}
+```
+
+as expected, the unauthenticated user could only access the open datasets.
+
+You can try with Alice's token:
+
+```
+source crypto/token_envs.sh
+curl -i localhost:8181/v1/data/permissions/allowed \
+     -H 'Content-Type: application/json' \
+     -d "{ \"input\": { \"method\": \"GET\", \"path\": [\"beacon\"], \"user\": \"$ALICE\" } }"
+```
+
+And sure enough, Alice can see the open datasets, registered datasets 
+(because she's an authenticated user here) and the `controlled1` dataset:
+```
+{"result":["open1","open2","open3","registered1","controlled1"]}
+```
+
 You can then run the tests (and see how the service is called using the 
 requests library in python) with:
 ```
 pytest
 ```
+
+The policy is in policy/permissions.rego; it is written in a DSL called
+[rego](https://www.openpolicyagent.org/docs/latest/policy-language/), and
+the OPA team provides a very handy [rego sandbox](https://play.openpolicyagent.org)
+for playing with policies.
+
+If you update the policy, you can restart OPA with `docker-compose restart opa`, 
+or, less heavy-handedly, use the [REST API](https://www.openpolicyagent.org/docs/latest/rest-api/)
+to trigger a reload.
